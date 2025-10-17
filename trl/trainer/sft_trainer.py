@@ -956,7 +956,7 @@ class SFTTrainer(BaseTrainer):
                             prompt_ids = processing_class.apply_chat_template(
                                 example["prompt"],
                                 tokenize=True,
-                                add_generation_prompt=True,
+                                #add_generation_prompt=True,
                                 tools=example.get("tools"),
                                 **example.get("chat_template_kwargs", {}),
                             )
