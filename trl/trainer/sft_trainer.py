@@ -971,6 +971,7 @@ class SFTTrainer(BaseTrainer):
                                 tools=example.get("tools"),
                                 **example.get("chat_template_kwargs", {}),
                             )
+                            # print(processing_class.decode(prompt_completion_processed["input_ids"])) ###########
                             # Fix transformers inconsistency: for VLMs, apply_chat_template returns lists of lists
                             # even for single examples, while for LLMs it returns lists of ints.
                             prompt_completion_processed = {
