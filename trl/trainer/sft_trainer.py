@@ -1025,13 +1025,16 @@ class SFTTrainer(BaseTrainer):
                             else:
                                 prompt = example["prompt"]
                                 completion = example["completion"]
+                            chat_template_kwargs = example.get("chat_template_kwargs", {})
+                            continue_final_message = chat_template_kwargs.pop("continue_final_message", False)
                             prompt_ids = processing_class.apply_chat_template(
                                 prompt,
                                 tools=example.get("tools"),
                                 add_generation_prompt=True,
+                                continue_final_message=False,
                                 tokenize=True,
                                 return_dict=False,
-                                **example.get("chat_template_kwargs", {}),
+                                **chat_template_kwargs,
                             )
                             # Fix transformers inconsistency: for VLMs, apply_chat_template returns lists of lists
                             # even for single examples, while for LLMs it returns lists of ints.
@@ -1042,7 +1045,8 @@ class SFTTrainer(BaseTrainer):
                                 tokenize=True,
                                 return_dict=True,
                                 return_assistant_tokens_mask=assistant_only_loss,
-                                **example.get("chat_template_kwargs", {}),
+                                continue_final_message=continue_final_message,
+                                **chat_template_kwargs,
                             )
                             # Fix transformers inconsistency: for VLMs, apply_chat_template returns lists of lists
                             # even for single examples, while for LLMs it returns lists of ints.
