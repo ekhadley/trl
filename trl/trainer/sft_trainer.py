@@ -1084,6 +1084,13 @@ class SFTTrainer(BaseTrainer):
                         output["input_ids"] = prompt_completion_ids
                         output["completion_mask"] = completion_mask
 
+                        # print(processing_class.decode(prompt_completion_ids))
+                        # print(processing_class.decode([m*t for m, t in zip(completion_mask, prompt_completion_ids)]))
+                        # print()
+                        # print()
+                        # print()
+                        # print()
+
                     else:  # language modeling case
                         if is_conversational(example):
                             if self._is_vlm:
